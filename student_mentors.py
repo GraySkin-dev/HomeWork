@@ -19,27 +19,31 @@ class Student:
             return 'Ошибка'
  
     def __str__(self):
-        message = f"""Имя: {self.name}\nФамилия: {self.surname}\n"""\
-            f"""Средняя оценка за домашние задания: {calculate_average(self.grades)}\n"""\
+        message = f"""\nИмя: {self.name}\nФамилия: {self.surname}\n"""\
+            f"""Средняя оценка за домашние задания: """\
+            f"""{calculate_average(self.grades)}\n"""\
             f"""Курсы в процессе изучения: {self.courses_in_progress}\n"""\
             f"""Завершенные курсы: {self.finished_courses}\n"""
         return message
  
     def __eq__(self, other):
         if isinstance(other, Student):
-            return calculate_average(self.grades) == calculate_average(other.grades)
+            return (calculate_average(self.grades) == 
+                    calculate_average(other.grades))
         else:
             return 'Ошибка'
  
     def __lt__(self, other):
         if isinstance(other, Student):
-            return calculate_average(self.grades) < calculate_average(other.grades)
+            return (calculate_average(self.grades) < 
+                    calculate_average(other.grades))
         else:
             return 'Ошибка'
  
     def __le__(self, other):
         if isinstance(other, Student):
-            return calculate_average(self.grades) <= calculate_average(other.grades)
+            return (calculate_average(self.grades) <= 
+                    calculate_average(other.grades))
         else:
             return 'Ошибка'
  
@@ -59,25 +63,29 @@ class Lecturer(Mentor):
         self.grades = {}
  
     def __str__(self):
-        message = f"""Имя: {self.name}\nФамилия: {self.surname}\n"""\
-            f"""Средняя оценка за лекции: {calculate_average(self.grades)}\n"""
+        message = f"""\nИмя: {self.name}\nФамилия: {self.surname}\n"""\
+            f"""Средняя оценка за лекции: """\
+            f"""{calculate_average(self.grades)}\n"""
         return message
  
     def __eq__(self, other):
         if isinstance(other, Student):
-            return calculate_average(self.grades) == calculate_average(other.grades)
+            return (calculate_average(self.grades) == 
+                    calculate_average(other.grades))
         else:
             return 'Ошибка'
  
     def __lt__(self, other):
         if isinstance(other, Student):
-            return calculate_average(self.grades) < calculate_average(other.grades)
+            return (calculate_average(self.grades) < 
+                    calculate_average(other.grades))
         else:
             return 'Ошибка'
  
     def __le__(self, other):
         if isinstance(other, Student):
-            return calculate_average(self.grades) <= calculate_average(other.grades)
+            return (calculate_average(self.grades) <= 
+                    calculate_average(other.grades))
         else:
             return 'Ошибка'
  
@@ -98,7 +106,7 @@ class Reviewer(Mentor):
             return 'Ошибка'
  
     def __str__(self):
-        message = f"""Имя: {self.name}\nФамилия: {self.surname}\n"""
+        message = f"""\nИмя: {self.name}\nФамилия: {self.surname}\n"""
         return message
  
  
@@ -112,29 +120,63 @@ def calculate_average(grades: dict):
         average = 0
     return average
  
-best_student = Student('Ruoy', 'Eman', 'your_gender')
-best_student.courses_in_progress += ['Python']
-best_student.courses_in_progress += ['java']
+students = [Student('StName1', 'StSurname1', 'male'), 
+                Student('StName2', 'StSurname2', 'female'), 
+                Student('StName3', 'StSurname3', 'female')]
+lecturers = [Lecturer('LeName1', 'LeSurname1'),
+                Lecturer('LeName2', 'LeSurname2'),
+                Lecturer('LeName3', 'LeSurname3')]
+reviewers = [Reviewer('ReName1', 'ReSurname1'),
+                Reviewer('ReName2', 'ReSurname2')]
  
-cool_reviewer = Reviewer('Some', 'Buddy')
-cool_reviewer.courses_attached += ['Python']
-cool_reviewer.courses_attached += ['java']
+students[0].courses_in_progress += ['C#', 'DHTML']
+students[1].courses_in_progress += ['Python', 'Java']
+students[2].courses_in_progress += ['Python', 'DHTML']
  
-cool_lecturer = Lecturer('Some', 'Buddy')
-cool_lecturer.courses_attached += ['Python']
-cool_lecturer.courses_attached += ['java']
+reviewers[0].courses_attached += ['Python', 'Java', 'C#', 'DHTML']
+reviewers[1].courses_attached += ['Python', 'Java', 'C#', 'DHTML']
  
-cool_reviewer.rate_hw(best_student, 'Python', 10)
-cool_reviewer.rate_hw(best_student, 'Python', 10)
-cool_reviewer.rate_hw(best_student, 'Python', 10)
-cool_reviewer.rate_hw(best_student, 'java', 8)
-cool_reviewer.rate_hw(best_student, 'java', 8)
-cool_reviewer.rate_hw(best_student, 'java', 8)
+lecturers[0].courses_attached += ['Python', 'Java']
+lecturers[1].courses_attached += ['C#', 'DHTML']
+lecturers[2].courses_attached += ['DHTML', 'Python']
  
-best_student.rate_lesson(cool_lecturer, 'Python', 9)
-best_student.rate_lesson(cool_lecturer, 'Python', 9)
-best_student.rate_lesson(cool_lecturer, 'Python', 9)
+reviewers[0].rate_hw(students[0], 'C#', 10)
+reviewers[1].rate_hw(students[0], 'C#', 4)
+reviewers[0].rate_hw(students[0], 'DHTML', 10)
+reviewers[1].rate_hw(students[0], 'DHTML', 6)
+reviewers[0].rate_hw(students[1], 'Python', 10)
+reviewers[1].rate_hw(students[1], 'Python', 8)
+reviewers[0].rate_hw(students[1], 'Java', 10)
+reviewers[1].rate_hw(students[1], 'Java', 10)
+reviewers[0].rate_hw(students[2], 'Python', 10)
+reviewers[1].rate_hw(students[2], 'Python', 2)
+reviewers[0].rate_hw(students[2], 'DHTML', 4)
+reviewers[1].rate_hw(students[2], 'DHTML', 4)
  
-print(best_student)
-print(cool_lecturer)
-print(cool_reviewer)
+students[0].rate_lesson(lecturers[1], 'C#', 9)
+students[0].rate_lesson(lecturers[1], 'C#', 10)
+students[0].rate_lesson(lecturers[1], 'DHTML', 8)
+students[0].rate_lesson(lecturers[1], 'DHTML', 9)
+students[0].rate_lesson(lecturers[2], 'DHTML', 7)
+students[0].rate_lesson(lecturers[2], 'DHTML', 7)
+students[1].rate_lesson(lecturers[0], 'Python', 8)
+students[1].rate_lesson(lecturers[0], 'Python', 9)
+students[1].rate_lesson(lecturers[2], 'Python', 6)
+students[1].rate_lesson(lecturers[2], 'Python', 7)
+students[1].rate_lesson(lecturers[0], 'Java', 8)
+students[1].rate_lesson(lecturers[0], 'Java', 10)
+students[2].rate_lesson(lecturers[0], 'Python', 5)
+students[2].rate_lesson(lecturers[0], 'Python', 5)
+students[2].rate_lesson(lecturers[2], 'Python', 5)
+students[2].rate_lesson(lecturers[2], 'Python', 5)
+students[2].rate_lesson(lecturers[1], 'DHTML', 5)
+students[2].rate_lesson(lecturers[1], 'DHTML', 5)
+students[2].rate_lesson(lecturers[2], 'DHTML', 5)
+students[2].rate_lesson(lecturers[2], 'DHTML', 5)
+
+for student in students:
+    print(student, student.grades)
+for lecturer in lecturers:
+    print(lecturer, lecturer.grades)
+for reviewer in reviewers:
+    print(reviewer)
