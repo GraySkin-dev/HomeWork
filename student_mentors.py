@@ -21,22 +21,41 @@ class Student:
     def __str__(self):
         message = f"""Имя: {self.name}\nФамилия: {self.surname}\n"""\
             f"""Средняя оценка за домашние задания: {calculate_average(self.grades)}\n"""\
-            """Курсы в процессе изучения: {self.courses_in_progress}\n"""\
+            f"""Курсы в процессе изучения: {self.courses_in_progress}\n"""\
             f"""Завершенные курсы: {self.finished_courses}\n"""
         return message
+ 
+    def __eq__(self, other):
+        if isinstance(other, Student):
+            return calculate_average(self.grades) == calculate_average(other.grades)
+        else:
+            return 'Ошибка'
+ 
+    def __lt__(self, other):
+        if isinstance(other, Student):
+            return calculate_average(self.grades) < calculate_average(other.grades)
+        else:
+            return 'Ошибка'
+ 
+    def __le__(self, other):
+        if isinstance(other, Student):
+            return calculate_average(self.grades) <= calculate_average(other.grades)
+        else:
+            return 'Ошибка'
+ 
  
 class Mentor:
  
     def __init__(self, name, surname):
         self.name = name
         self.surname = surname
+        self.courses_attached = []
  
  
 class Lecturer(Mentor):
  
     def __init__(self, name, surname):
         super().__init__(name, surname)
-        self.courses_attached = []
         self.grades = {}
  
     def __str__(self):
@@ -44,12 +63,28 @@ class Lecturer(Mentor):
             f"""Средняя оценка за лекции: {calculate_average(self.grades)}\n"""
         return message
  
+    def __eq__(self, other):
+        if isinstance(other, Student):
+            return calculate_average(self.grades) == calculate_average(other.grades)
+        else:
+            return 'Ошибка'
+ 
+    def __lt__(self, other):
+        if isinstance(other, Student):
+            return calculate_average(self.grades) < calculate_average(other.grades)
+        else:
+            return 'Ошибка'
+ 
+    def __le__(self, other):
+        if isinstance(other, Student):
+            return calculate_average(self.grades) <= calculate_average(other.grades)
+        else:
+            return 'Ошибка'
  
 class Reviewer(Mentor):
  
     def __init__(self, name, surname):
         super().__init__(name, surname)
-        self.courses_attached = []
  
     def rate_hw(self, lecturer, course, grade):
         if (isinstance(lecturer, Student) and
@@ -71,7 +106,10 @@ def calculate_average(grades: dict):
     all_grades = []
     for course_grades in grades.values():
         all_grades += course_grades
-    average = sum(all_grades)/len(all_grades)
+    if len(all_grades) > 0:
+        average = sum(all_grades)/len(all_grades)
+    else:
+        average = 0
     return average
  
 best_student = Student('Ruoy', 'Eman', 'your_gender')
