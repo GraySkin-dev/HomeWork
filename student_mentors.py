@@ -69,21 +69,21 @@ class Lecturer(Mentor):
         return message
  
     def __eq__(self, other):
-        if isinstance(other, Student):
+        if isinstance(other, Lecturer):
             return (calculate_average(self.grades) == 
                     calculate_average(other.grades))
         else:
             return 'Ошибка'
  
     def __lt__(self, other):
-        if isinstance(other, Student):
+        if isinstance(other, Lecturer):
             return (calculate_average(self.grades) < 
                     calculate_average(other.grades))
         else:
             return 'Ошибка'
  
     def __le__(self, other):
-        if isinstance(other, Student):
+        if isinstance(other, Lecturer):
             return (calculate_average(self.grades) <= 
                     calculate_average(other.grades))
         else:
@@ -115,9 +115,25 @@ def calculate_average(grades: dict):
     for course_grades in grades.values():
         all_grades += course_grades
     if len(all_grades) > 0:
-        average = sum(all_grades)/len(all_grades)
+        average = sum(all_grades) / len(all_grades)
     else:
         average = 0
+    return average
+ 
+def course_average_lecturers(lecturers: list[Lecturer], course):
+    all_grades = []
+    for lecturer in lecturers:
+        for course_key, grades in lecturer.grades.items():
+            if course_key == course: all_grades += grades
+    average = sum(all_grades) / len(all_grades)
+    return average
+ 
+def course_average_students(students: list[Student], course):
+    all_grades = []
+    for student in students:
+        for course_key, grades in student.grades.items():
+            if course_key == course: all_grades += grades
+    average = sum(all_grades) / len(all_grades)
     return average
  
 students = [Student('StName1', 'StSurname1', 'male'), 
@@ -174,9 +190,21 @@ students[2].rate_lesson(lecturers[1], 'DHTML', 5)
 students[2].rate_lesson(lecturers[2], 'DHTML', 5)
 students[2].rate_lesson(lecturers[2], 'DHTML', 5)
 
-for student in students:
-    print(student, student.grades)
-for lecturer in lecturers:
-    print(lecturer, lecturer.grades)
-for reviewer in reviewers:
-    print(reviewer)
+for student in students: print(student, 'Словарь: ', student.grades)
+for lecturer in lecturers: print(lecturer, 'Словарь: ', lecturer.grades)
+for reviewer in reviewers: print(reviewer)
+print(students[0] == students[1])
+print(students[2] > students[1])
+print(students[0] >= students[2])
+print(lecturers[0] == lecturers[1])
+print(lecturers[1] > lecturers[2])
+print(lecturers[2] >= lecturers[0])
+print()
+print(f'Среднее у лекторов по Java: ' + 
+        f'{course_average_lecturers(lecturers, 'Java')}')
+print(f'Среднее у лекторов по Python: ' + 
+        f'{course_average_lecturers(lecturers, 'Python')}')
+print(f'Среднее у студентов по DHTML: ' + 
+        f'{course_average_students(students, 'DHTML')}')
+print(f'Среднее у студентов по C#: ' + 
+        f'{course_average_students(students, 'C#')}')
