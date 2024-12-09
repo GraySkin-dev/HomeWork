@@ -19,11 +19,11 @@ class Student:
             return 'Ошибка'
  
     def __str__(self):
-        message = f"""\nИмя: {self.name}\nФамилия: {self.surname}\n"""\
-            f"""Средняя оценка за домашние задания: """\
-            f"""{calculate_average(self.grades)}\n"""\
-            f"""Курсы в процессе изучения: {self.courses_in_progress}\n"""\
-            f"""Завершенные курсы: {self.finished_courses}\n"""
+        message = (f"""\nИмя: {self.name}\nФамилия: {self.surname}\n"""
+            f"""Средняя оценка за домашние задания: """
+            f"""{calculate_average(self.grades)}\n"""
+            f"""Курсы в процессе изучения: {self.courses_in_progress}\n"""
+            f"""Завершенные курсы: {self.finished_courses}\n""")
         return message
  
     def __eq__(self, other):
@@ -63,9 +63,9 @@ class Lecturer(Mentor):
         self.grades = {}
  
     def __str__(self):
-        message = f"""\nИмя: {self.name}\nФамилия: {self.surname}\n"""\
-            f"""Средняя оценка за лекции: """\
-            f"""{calculate_average(self.grades)}\n"""
+        message = (f"""\nИмя: {self.name}\nФамилия: {self.surname}\n"""
+            f"""Средняя оценка за лекции: """
+            f"""{calculate_average(self.grades)}\n""")
         return message
  
     def __eq__(self, other):
